@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List<i></title>
+    <style>
+        body {
+            font-family: arial, cambria;
+            background: url(images/bg.jpg);
+            background-size: cover;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .task .right-sign {
+            margin-right: 10px;
+        }
+
+        .task .delete-sign {
+            margin-left: 10px;
+        }
+
+        .task.completed .task-description {
+            text-decoration: line-through;
+        }
+
+        #task-list-container {
+            background-color: rgb(74, 196, 226);
+            position: relative;
+            border-radius: 15px;
+            left: 33vw;
+            width: 358px;
+            height: 50vh;
+            margin-top: 25vh;
+            /*margin: 0 auto;*/
+            padding: 20px;
+            box-shadow: 20px 17px 20px 13px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        #task-list-container #task-input {
+            padding: 5px 12px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #24292e;
+            vertical-align: middle;
+            background-color: #ffffff;
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            outline: none;
+            box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+
+        #task-list-container #task-input:focus {
+            border-color: #3d22d6;
+            outline: none;
+            box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+        }
+
+
+        #add-task-btn {
+
+            display: inline-block;
+            outline: 0;
+            appearance: none;
+            padding: 0px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            background-color: rgb(249, 251, 250);
+            border: 1px solid rgb(137, 151, 155);
+            box-shadow: rgb(6 22 33 / 30%) 0px 1px 2px;
+            color: rgb(61, 79, 88);
+            font-size: 12px;
+            font-weight: 400;
+            height: 30px;
+            transition: all 150ms ease-in-out 0s;
+        }
+
+        #add-task-btn:hover {
+            color: rgb(61, 79, 88);
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(93, 108, 116);
+            box-shadow: rgb(0 0 0 / 30%) 0px 4px 4px, rgb(231 238 236) 0px 0px 0px 3px;
+
+        }
+
+        #task-list {
+            margin-top: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+        }
+
+        .task {
+            background-color: rgb(252, 64, 17);
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid rgb(137, 151, 155);
+            border-radius: 4px;
+            padding: 10px;
+            transition: all 150ms ease-in-out 0s;
+        }
+
+        .task:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+
+
+        .task-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgb(61, 79, 88);
+        }
+
+        .right-sign,
+        .delete-sign {
+            outline: 0;
+            appearance: none;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgb(66, 185, 131);
+            transition: all 150ms ease-in-out 0s;
+        }
+
+        .delete-sign:hover{
+            color: rgb(203, 238, 5);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="task-list-container">
+        <h1 style="font-family:'Times New Roman', calbri, helvetica; text-align:center;">To-Do List</h1>
+        <input type="text" id="task-input" placeholder="Enter Task...">
+        <button id="add-task-btn">Add Task</button>
+        <div id="task-list"></div>
+    </div>
+    <script>
+        let taskInput = document.getElementById('task-input');
+        let addTaskBtn = document.getElementById('add-task-btn');
+        let taskList = document.getElementById('task-list');
+
+        addTaskBtn.addEventListener('click', () => {
+            let taskDescription = taskInput.value.trim();
+            if (taskDescription) {
+                let taskDiv = document.createElement('div');
+                taskDiv.classList.add('task');
+
+                let taskText = document.createElement('span');
+                taskText.classList.add('task-description');
+                taskText.textContent = taskDescription;
+                taskDiv.appendChild(taskText);
+
+                let rightSign = document.createElement('button');
+                rightSign.classList.add('right-sign');
+                rightSign.textContent = '✓';
+                rightSign.addEventListener('click', () => {
+                    taskDiv.classList.toggle('completed');
+                });
+                taskDiv.appendChild(rightSign);
+
+                let deleteSign = document.createElement('button');
+                deleteSign.classList.add('delete-sign');
+                deleteSign.textContent = 'x';
+                deleteSign.addEventListener('click', () => {
+                    taskList.removeChild(taskDiv);
+                });
+                taskDiv.appendChild(deleteSign);
+
+                taskList.appendChild(taskDiv);
+                taskInput.value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
